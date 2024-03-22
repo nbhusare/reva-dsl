@@ -1,0 +1,5 @@
+services:
+  langserver:
+    build: .
+    ports:
+      - 5008:5008
