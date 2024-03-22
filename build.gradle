@@ -10,6 +10,7 @@ buildscript {
 
 subprojects {
 	ext.xtextVersion = '2.33.0'
+	ext.junitVersion = '4.13.2'
 	ext.tyrusVersion = '1.18'
 	ext.lsp4jWebsocketVersion = '0.21.1'
 	ext.slf4jVersion = "1.7.36"

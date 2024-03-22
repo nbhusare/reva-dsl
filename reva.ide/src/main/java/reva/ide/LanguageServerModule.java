@@ -1,4 +1,4 @@
-package reva.ls;
+package reva.ide;
 
 import com.google.inject.AbstractModule;
 import org.eclipse.lsp4j.services.LanguageServer;
@@ -11,7 +11,6 @@ import org.eclipse.xtext.resource.IContainer;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.ResourceServiceProviderServiceLoader;
 import org.eclipse.xtext.resource.containers.ProjectDescriptionBasedContainerManager;
-import reva.ls.server.RevaLanguageServerImpl;
 
 import java.util.concurrent.ExecutorService;
 

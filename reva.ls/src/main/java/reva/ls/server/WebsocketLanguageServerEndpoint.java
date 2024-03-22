@@ -9,7 +9,7 @@ import org.eclipse.lsp4j.services.LanguageServer;
 import org.eclipse.lsp4j.websocket.WebSocketEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reva.ls.LanguageServerModule;
+import reva.ide.LanguageServerModule;
 
 import java.util.Collection;
 

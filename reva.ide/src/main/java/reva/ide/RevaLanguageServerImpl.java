@@ -1,4 +1,4 @@
-package reva.ls.server;
+package reva.ide;
 
 import org.eclipse.lsp4j.CompletionOptions;
 import org.eclipse.lsp4j.DefinitionParams;

@@ -1,0 +1,28 @@
+{
+  "source": "source1.reva",
+  "cursor": {
+    "line": 0,
+    "col": 6
+  },
+  "expected": [
+    {
+      "label": "\u0027\u0027",
+      "kind": "Snippet",
+      "sortText": "00000",
+      "insertTextFormat": "Snippet",
+      "textEdit": {
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 6
+          },
+          "end": {
+            "line": 0,
+            "character": 6
+          }
+        },
+        "newText": "\u0027{$1}\u0027"
+      }
+    }
+  ]
+}
