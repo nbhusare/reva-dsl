@@ -1,6 +1,5 @@
 pluginManagement {
     plugins {
-        id 'io.freefair.lombok' version "${lombokVersion}"
     }
 }
 

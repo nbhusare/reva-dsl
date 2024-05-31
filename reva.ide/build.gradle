@@ -1,5 +1,4 @@
 plugins {
-	id 'io.freefair.lombok'
 	id 'application'
 }
 
