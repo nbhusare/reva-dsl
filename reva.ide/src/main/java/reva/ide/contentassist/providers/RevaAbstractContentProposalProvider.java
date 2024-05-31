@@ -1,6 +1,8 @@
 package reva.ide.contentassist.providers;
 
 import com.google.inject.Inject;
+import java.util.List;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ide.editor.contentassist.ContentAssistEntry;
 import org.eclipse.xtext.ide.editor.contentassist.IIdeContentProposalAcceptor;
@@ -9,12 +11,12 @@ import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalPriorities;
 import org.eclipse.xtext.xbase.ide.contentassist.XbaseIdeContentProposalProvider;
 import reva.config.RevaConfig;
 
-import java.util.List;
-
 public abstract class RevaAbstractContentProposalProvider extends XbaseIdeContentProposalProvider {
   @Inject private RevaConfig revaConfig;
 
   @Inject private IdeContentProposalPriorities proposalPriorities;
+
+  public abstract Class<? extends EObject> mappedTo();
 
   public final Boolean createProposals(
       ContentAssistContext context,

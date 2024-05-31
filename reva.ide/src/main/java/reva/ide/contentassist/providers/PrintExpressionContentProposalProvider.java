@@ -9,16 +9,23 @@ import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalCreator;
 import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalPriorities;
 import org.eclipse.xtext.nodemodel.INode;
 import reva.config.RevaConfig;
+import reva.ide.spi.RevaSpiService;
 import reva.ide.utils.nodes.NodeUtils;
 import reva.revaDsl.PrintExpression;
 import reva.services.RevaDslGrammarAccess;
 
+@RevaSpiService("reva.ide.contentassist.providers.RevaAbstractContentProposalProvider")
 public class PrintExpressionContentProposalProvider extends RevaAbstractContentProposalProvider {
   @Inject RevaDslGrammarAccess grammarAccess;
 
   @Inject IdeContentProposalPriorities proposalPriorities;
 
   @Inject RevaConfig revaConfig;
+
+  @Override
+  public Class<? extends EObject> mappedTo() {
+    return PrintExpression.class;
+  }
 
   @Override
   public Boolean create(

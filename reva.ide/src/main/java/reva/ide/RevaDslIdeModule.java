@@ -6,13 +6,14 @@ package reva.ide;
 import com.google.inject.Binder;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
+import java.util.List;
+import java.util.ServiceLoader;
+import java.util.stream.Collectors;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.ide.server.contentassist.ContentAssistService;
 import org.eclipse.xtext.xbase.ide.contentassist.XbaseIdeContentProposalProvider;
 import reva.ide.contentassist.RevaContentProposalProvider;
-import reva.ide.contentassist.providers.PrintExpressionContentProposalProvider;
 import reva.ide.contentassist.providers.RevaAbstractContentProposalProvider;
-import reva.revaDsl.PrintExpression;
 
 /** Use this class to register ide components. */
 public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
@@ -36,8 +37,16 @@ public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
         contentAssistProvidersBinder =
             MapBinder.newMapBinder(binder, new TypeLiteral<>() {}, new TypeLiteral<>() {});
 
-    contentAssistProvidersBinder
-        .addBinding(PrintExpression.class)
-        .toInstance(new PrintExpressionContentProposalProvider());
+    for (ServiceLoader.Provider<RevaAbstractContentProposalProvider> provider :
+        getProviders(RevaAbstractContentProposalProvider.class)) {
+      contentAssistProvidersBinder
+          .addBinding(provider.get().mappedTo())
+          .to(provider.get().getClass());
+    }
+  }
+
+  private <T> List<ServiceLoader.Provider<T>> getProviders(Class<T> spi) {
+    ServiceLoader<T> load = ServiceLoader.load(spi);
+    return load.stream().collect(Collectors.toList());
   }
 }
