@@ -8,10 +8,12 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.formatting2.IFormatter2;
+import org.eclipse.xtext.ide.server.ILanguageServerExtension;
 import org.eclipse.xtext.ide.server.codeActions.ICodeActionService2;
 import org.eclipse.xtext.ide.server.codelens.ICodeLensService;
 import org.eclipse.xtext.ide.server.commands.IExecutableCommandService;
 import org.eclipse.xtext.ide.server.contentassist.ContentAssistService;
+import org.eclipse.xtext.service.SingletonBinding;
 import org.eclipse.xtext.xbase.ide.contentassist.XbaseIdeContentProposalProvider;
 import org.eclipse.xtext.xbase.typesystem.internal.IFeatureScopeTracker;
 import reva.formatting2.RevaDslFormatter;
@@ -21,6 +23,7 @@ import reva.ide.commands.RevaCommandsService;
 import reva.ide.contentassist.RevaContentProposalProvider;
 import reva.ide.contentassist.providers.PrintExpressionContentProposalProvider;
 import reva.ide.contentassist.providers.RevaAbstractContentProposalProvider;
+import reva.ide.endpoints.custom.RevaTextDocumentExtension;
 import reva.revaDsl.PrintExpression;
 import reva.typesystem.OptimizingFeatureScopeTrackerProvider2;
 
@@ -60,6 +63,11 @@ public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
 
   public Class<? extends IFormatter2> bindIFormatter2() {
     return RevaDslFormatter.class;
+  }
+
+  @SingletonBinding
+  public Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
+    return RevaTextDocumentExtension.class;
   }
 
   private void bindContentAssistProviders(Binder binder) {
