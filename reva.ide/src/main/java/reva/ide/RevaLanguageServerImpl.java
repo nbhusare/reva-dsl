@@ -4,6 +4,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.lsp4j.CodeAction;
 import org.eclipse.lsp4j.CodeActionParams;
 import org.eclipse.lsp4j.CodeLens;
+import org.eclipse.lsp4j.CodeLensOptions;
 import org.eclipse.lsp4j.CodeLensParams;
 import org.eclipse.lsp4j.Command;
 import org.eclipse.lsp4j.CompletionOptions;
@@ -102,6 +103,7 @@ public class RevaLanguageServerImpl extends LanguageServerImpl {
     completionProvider.setResolveProvider(true);
 
     serverCapabilities.setCodeActionProvider(true);
+    serverCapabilities.setCodeLensProvider(new CodeLensOptions());
 
     return serverCapabilities;
   }

@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 public class CreolCommandsService implements IExecutableCommandService {
   @Override
   public List<String> initialize() {
-    return Arrays.stream(Command.values()).map(Command::getTitle).toList();
+    return Arrays.stream(Command.values()).map(Command::getId).toList();
   }
 
   @Override

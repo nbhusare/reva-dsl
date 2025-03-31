@@ -42,7 +42,7 @@ public class RevaCodeActionService implements ICodeActionService2 {
     CodeAction codeAction = new CodeAction();
     Command command = new Command();
 
-    command.setCommand(reva.ide.commands.Command.CreateVariable.getTitle());
+    command.setCommand(reva.ide.commands.Command.CreateVariable.getId());
     command.setTitle(reva.ide.commands.Command.CreateVariable.getTitle());
 
     command.setArguments(
