@@ -7,15 +7,17 @@ import com.google.inject.Binder;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.formatting2.IFormatter2;
 import org.eclipse.xtext.ide.server.codeActions.ICodeActionService2;
 import org.eclipse.xtext.ide.server.codelens.ICodeLensService;
 import org.eclipse.xtext.ide.server.commands.IExecutableCommandService;
 import org.eclipse.xtext.ide.server.contentassist.ContentAssistService;
 import org.eclipse.xtext.xbase.ide.contentassist.XbaseIdeContentProposalProvider;
 import org.eclipse.xtext.xbase.typesystem.internal.IFeatureScopeTracker;
+import reva.formatting2.RevaDslFormatter;
 import reva.ide.codeactions.RevaCodeActionService;
 import reva.ide.codelens.RevaCodeLensService;
-import reva.ide.commands.CreolCommandsService;
+import reva.ide.commands.RevaCommandsService;
 import reva.ide.contentassist.RevaContentProposalProvider;
 import reva.ide.contentassist.providers.PrintExpressionContentProposalProvider;
 import reva.ide.contentassist.providers.RevaAbstractContentProposalProvider;
@@ -53,7 +55,11 @@ public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
   }
 
   public Class<? extends IExecutableCommandService> bindCommandsService() {
-    return CreolCommandsService.class;
+    return RevaCommandsService.class;
+  }
+
+  public Class<? extends IFormatter2> bindIFormatter2() {
+    return RevaDslFormatter.class;
   }
 
   private void bindContentAssistProviders(Binder binder) {

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class CreolCommandsService implements IExecutableCommandService {
+public class RevaCommandsService implements IExecutableCommandService {
   @Override
   public List<String> initialize() {
     return Arrays.stream(Command.values()).map(Command::getId).toList();
