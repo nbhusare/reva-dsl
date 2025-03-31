@@ -7,12 +7,18 @@ import com.google.inject.Binder;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.ide.server.codeActions.ICodeActionService2;
+import org.eclipse.xtext.ide.server.commands.IExecutableCommandService;
 import org.eclipse.xtext.ide.server.contentassist.ContentAssistService;
 import org.eclipse.xtext.xbase.ide.contentassist.XbaseIdeContentProposalProvider;
+import org.eclipse.xtext.xbase.typesystem.internal.IFeatureScopeTracker;
+import reva.ide.codeactions.RevaCodeActionService;
+import reva.ide.commands.CreolCommandsService;
 import reva.ide.contentassist.RevaContentProposalProvider;
 import reva.ide.contentassist.providers.PrintExpressionContentProposalProvider;
 import reva.ide.contentassist.providers.RevaAbstractContentProposalProvider;
 import reva.revaDsl.PrintExpression;
+import reva.typesystem.OptimizingFeatureScopeTrackerProvider2;
 
 /** Use this class to register ide components. */
 public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
@@ -29,6 +35,19 @@ public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
 
   public Class<? extends XbaseIdeContentProposalProvider> bindXbaseIdeContentProposalProvider() {
     return RevaContentProposalProvider.class;
+  }
+
+  @Override
+  public Class<? extends IFeatureScopeTracker.Provider> bindIFeatureScopeTrackerProvider() {
+    return OptimizingFeatureScopeTrackerProvider2.class;
+  }
+
+  public Class<? extends ICodeActionService2> bindCodeActionService() {
+    return RevaCodeActionService.class;
+  }
+
+  public Class<? extends IExecutableCommandService> bindCommandsService() {
+    return CreolCommandsService.class;
   }
 
   private void bindContentAssistProviders(Binder binder) {

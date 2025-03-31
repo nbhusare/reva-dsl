@@ -6,6 +6,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ide.editor.contentassist.IIdeContentProposalAcceptor;
 import org.eclipse.xtext.ide.editor.contentassist.IdeContentProposalCreator;
+import org.eclipse.xtext.ide.server.codeActions.ICodeActionService2;
+import reva.ide.codeactions.switches.CodeActionComposedSwitch;
+import reva.ide.codeactions.switches.RevaDslCodeActionSwitch;
+import reva.ide.codeactions.switches.XBaseCodeActionSwitch;
 import reva.ide.contentassist.providers.RevaAbstractContentProposalProvider;
 import reva.ide.contentassist.switches.ContentAssistComposedSwitch;
 import reva.ide.contentassist.switches.RevaDslContentAssistSwitch;
@@ -25,5 +29,11 @@ public class ComposedSwitchFactory {
         new RevaDslContentAssistSwitch(proposalProviders, context, acceptor, proposalCreator);
 
     return new ContentAssistComposedSwitch(xBaseContentAssistSwitch, revaDslContentAssistSwitch);
+  }
+
+  public CodeActionComposedSwitch getCodeActionComposedSwitch(ICodeActionService2.Options options) {
+    XBaseCodeActionSwitch xBaseCodeActionSwitch = new XBaseCodeActionSwitch();
+    RevaDslCodeActionSwitch revaDslCodeActionSwitch = new RevaDslCodeActionSwitch(options);
+    return new CodeActionComposedSwitch(xBaseCodeActionSwitch, revaDslCodeActionSwitch);
   }
 }

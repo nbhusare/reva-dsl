@@ -3,24 +3,41 @@
  */
 package reva.validation;
 
+import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.validation.CheckType;
 import org.eclipse.xtext.xbase.XExpression;
 
+import org.eclipse.xtext.xbase.XNumberLiteral;
+import org.eclipse.xtext.xbase.XStringLiteral;
+import reva.diagnostics.Diagnostic;
 import reva.revaDsl.PrintExpression;
 import reva.revaDsl.RepeatExpression;
+import reva.revaDsl.XVariableDeclaration;
 
 /**
  * This class contains custom validation rules.
  *
- * See
- * https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
+ * <p>See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 public class RevaDslValidator extends AbstractRevaDslValidator {
 
-	@Override
-	protected boolean isValueExpectedRecursive(XExpression expr) {
-		return expr.eContainer() instanceof PrintExpression //
-				|| expr.eContainer() instanceof RepeatExpression //
-				|| super.isValueExpectedRecursive(expr);
-	}
+  @Override
+  protected boolean isValueExpectedRecursive(XExpression expr) {
+    return expr.eContainer() instanceof PrintExpression //
+        || expr.eContainer() instanceof RepeatExpression //
+        || expr.eContainer() instanceof XVariableDeclaration
+        || super.isValueExpectedRecursive(expr);
+  }
 
+  @Check(CheckType.NORMAL)
+  public void validatePrintExpression(PrintExpression printExpression) {
+    if (printExpression.getExpression() instanceof XStringLiteral
+        || printExpression.getExpression() instanceof XNumberLiteral) {
+      publishWarning(Diagnostic.RV001.getMessage(), Diagnostic.RV001.getCode());
+    }
+  }
+
+  private void publishWarning(String message, String diagnosticCode) {
+    warning(message, null, diagnosticCode);
+  }
 }
