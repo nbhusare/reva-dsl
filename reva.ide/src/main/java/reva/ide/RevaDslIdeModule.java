@@ -8,6 +8,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.formatting2.IFormatter2;
+import org.eclipse.xtext.ide.editor.contentassist.IdeCrossrefProposalProvider;
 import org.eclipse.xtext.ide.server.ILanguageServerExtension;
 import org.eclipse.xtext.ide.server.codeActions.ICodeActionService2;
 import org.eclipse.xtext.ide.server.codelens.ICodeLensService;
@@ -20,7 +21,8 @@ import reva.formatting2.RevaDslFormatter;
 import reva.ide.codeactions.RevaCodeActionService;
 import reva.ide.codelens.RevaCodeLensService;
 import reva.ide.commands.RevaCommandsService;
-import reva.ide.contentassist.RevaContentProposalProvider;
+import reva.ide.contentassist.RevaCrossrefProposalProvider;
+import reva.ide.contentassist.RevaIdeContentProposalProvider;
 import reva.ide.contentassist.providers.PrintExpressionContentProposalProvider;
 import reva.ide.contentassist.providers.RevaAbstractContentProposalProvider;
 import reva.ide.endpoints.custom.RevaTextDocumentExtension;
@@ -38,10 +40,6 @@ public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
 
   public Class<? extends ContentAssistService> bindContentAssistService() {
     return ContentAssistService.class;
-  }
-
-  public Class<? extends XbaseIdeContentProposalProvider> bindXbaseIdeContentProposalProvider() {
-    return RevaContentProposalProvider.class;
   }
 
   @Override
@@ -68,6 +66,15 @@ public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
   @SingletonBinding
   public Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
     return RevaTextDocumentExtension.class;
+  }
+
+  @Override
+  public Class<? extends IdeCrossrefProposalProvider> bindIdeCrossrefProposalProvider() {
+    return RevaCrossrefProposalProvider.class;
+  }
+  
+  public Class<? extends XbaseIdeContentProposalProvider> bindXbaseIdeContentProposalProvider() {
+    return RevaIdeContentProposalProvider.class;
   }
 
   private void bindContentAssistProviders(Binder binder) {

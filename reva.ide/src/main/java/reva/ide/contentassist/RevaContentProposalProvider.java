@@ -3,6 +3,7 @@ package reva.ide.contentassist;
 import com.google.inject.Inject;
 import java.util.Collection;
 import org.eclipse.xtext.AbstractElement;
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ide.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ide.editor.contentassist.IIdeContentProposalAcceptor;
 import org.eclipse.xtext.xbase.ide.contentassist.XbaseIdeContentProposalProvider;
@@ -30,5 +31,11 @@ public class RevaContentProposalProvider extends XbaseIdeContentProposalProvider
         }
       }
     }
+  }
+
+  @Override
+  public boolean filterKeyword(Keyword keyword, ContentAssistContext context) {
+    // TODO: Here we can filter out the allowed keywords
+    return super.filterKeyword(keyword, context);
   }
 }
