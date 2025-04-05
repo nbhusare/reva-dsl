@@ -2,6 +2,8 @@ package reva.ide;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.lsp4j.CodeAction;
+import org.eclipse.lsp4j.CodeActionKind;
+import org.eclipse.lsp4j.CodeActionOptions;
 import org.eclipse.lsp4j.CodeActionParams;
 import org.eclipse.lsp4j.CodeLens;
 import org.eclipse.lsp4j.CodeLensOptions;
@@ -27,6 +29,7 @@ import org.eclipse.xtext.ide.server.codelens.ICodeLensService;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.util.CancelIndicator;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -102,10 +105,22 @@ public class RevaLanguageServerImpl extends LanguageServerImpl {
     completionProvider.setTriggerCharacters(triggerCharacters);
     completionProvider.setResolveProvider(true);
 
-    serverCapabilities.setCodeActionProvider(true);
+    serverCapabilities.setCodeActionProvider(getCodeActionOptions());
     serverCapabilities.setCodeLensProvider(new CodeLensOptions());
 
     return serverCapabilities;
+  }
+
+  public static CodeActionOptions getCodeActionOptions() {
+    CodeActionOptions options = new CodeActionOptions();
+    options.setResolveProvider(true);
+    options.setCodeActionKinds(
+            Arrays.asList(CodeActionKind.SourceOrganizeImports,
+                    CodeActionKind.Source,
+                    CodeActionKind.QuickFix)
+    );
+
+    return options;
   }
 
   protected List<? extends CodeLens> codeLens(

@@ -16,7 +16,7 @@ public enum Command {
     return title;
   }
 
-  public String getId() {
+  public String getCommand() {
     return id;
   }
 }

@@ -35,7 +35,7 @@ public class RevaCodeLensService implements ICodeLensService {
     CodeLens codeLens = new CodeLens();
     codeLens.setCommand(getRepeatPrintStatementCommand(printExpression, document, uri));
     codeLens.setRange(NodeUtils.getRange(document, printExpression));
-    
+
     return codeLens;
   }
 
@@ -46,7 +46,7 @@ public class RevaCodeLensService implements ICodeLensService {
     String printStatement = NodeModelUtils.getNode(printExpression).getText();
 
     command.setTitle(reva.ide.commands.Command.RepeatPrint.getTitle());
-    command.setCommand(reva.ide.commands.Command.CreateVariable.getId());
+    command.setCommand(reva.ide.commands.Command.RepeatPrint.getCommand());
 
     RepeatPrintStatementArgs args =
         new RepeatPrintStatementArgs(

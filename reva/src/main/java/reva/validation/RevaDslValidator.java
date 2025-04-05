@@ -3,6 +3,7 @@
  */
 package reva.validation;
 
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.eclipse.xtext.xbase.XExpression;
@@ -30,10 +31,13 @@ public class RevaDslValidator extends AbstractRevaDslValidator {
   }
 
   @Check(CheckType.NORMAL)
-  public void validatePrintExpression(PrintExpression printExpression) {
-    if (printExpression.getExpression() instanceof XStringLiteral
-        || printExpression.getExpression() instanceof XNumberLiteral) {
-      publishWarning(Diagnostic.RV001.getMessage(), Diagnostic.RV001.getCode());
+  public void validateXExpression(XExpression expression) {
+    if (expression.eContainer() instanceof PrintExpression
+        && (expression instanceof XNumberLiteral || expression instanceof XStringLiteral)) {
+      publishWarning(
+          Diagnostic.RV001.getMessage()
+              + NodeModelUtils.getTokenText(NodeModelUtils.getNode(expression)),
+          Diagnostic.RV001.getCode());
     }
   }
 

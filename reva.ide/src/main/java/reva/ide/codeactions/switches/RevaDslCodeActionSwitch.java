@@ -6,6 +6,7 @@ import org.eclipse.lsp4j.CodeActionKind;
 import org.eclipse.lsp4j.Command;
 import org.eclipse.lsp4j.jsonrpc.messages.Either;
 import org.eclipse.xtext.ide.server.codeActions.ICodeActionService2;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.xbase.XNumberLiteral;
 import org.eclipse.xtext.xbase.XStringLiteral;
 import reva.ide.commands.CreateVariableArgs;
@@ -31,13 +32,15 @@ public class RevaDslCodeActionSwitch extends RevaDslCustomSwitch {
       return Collections.emptyList();
     }
 
-    codeActions.add(getCreateVariableCodeAction(options.getURI(), null));
+    String variableValue =
+        NodeModelUtils.getTokenText(NodeModelUtils.getNode(printExpression.getExpression()));
+    codeActions.add(getCreateVariableCodeAction(options.getURI(), null, variableValue));
 
     return Collections.emptyList();
   }
 
   private Either<Command, CodeAction> getCreateVariableCodeAction(
-      String uri, org.eclipse.lsp4j.Diagnostic diagnostic) {
+      String uri, org.eclipse.lsp4j.Diagnostic diagnostic, String variableValue) {
     CodeAction codeAction = new CodeAction();
     Command command = new Command();
 
@@ -45,7 +48,8 @@ public class RevaDslCodeActionSwitch extends RevaDslCustomSwitch {
     command.setTitle(reva.ide.commands.Command.CreateVariable.getTitle());
 
     command.setArguments(
-        List.of(new CreateVariableArgs("varX", diagnostic.getRange(), uri, diagnostic)));
+        List.of(
+            new CreateVariableArgs("varX", diagnostic.getRange(), uri, diagnostic, variableValue)));
     codeAction.setCommand(command);
     codeAction.setKind(CodeActionKind.QuickFix);
 

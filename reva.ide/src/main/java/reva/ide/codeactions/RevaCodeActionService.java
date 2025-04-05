@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.lsp4j.CodeAction;
 import org.eclipse.lsp4j.CodeActionKind;
 import org.eclipse.lsp4j.Command;
+import org.eclipse.lsp4j.WorkspaceEdit;
 import org.eclipse.lsp4j.jsonrpc.messages.Either;
 import org.eclipse.xtext.ide.server.codeActions.ICodeActionService2;
 import reva.diagnostics.Diagnostic;
@@ -42,13 +43,16 @@ public class RevaCodeActionService implements ICodeActionService2 {
     CodeAction codeAction = new CodeAction();
     Command command = new Command();
 
-    command.setCommand(reva.ide.commands.Command.CreateVariable.getId());
+    command.setCommand(reva.ide.commands.Command.CreateVariable.getCommand());
     command.setTitle(reva.ide.commands.Command.CreateVariable.getTitle());
 
+    String variableValue = diagnostic.getMessage().replace(Diagnostic.RV001.getMessage(), "");
     command.setArguments(
-        List.of(new CreateVariableArgs("varX", diagnostic.getRange(), uri, diagnostic)));
+        List.of(
+            new CreateVariableArgs("varX", diagnostic.getRange(), uri, diagnostic, variableValue)));
     codeAction.setCommand(command);
     codeAction.setKind(CodeActionKind.QuickFix);
+    codeAction.setTitle(reva.ide.commands.Command.CreateVariable.getTitle());
 
     return Either.forRight(codeAction);
   }

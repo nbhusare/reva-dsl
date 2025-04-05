@@ -1,7 +1,7 @@
 package reva.diagnostics;
 
 public enum Diagnostic {
-  RV001("RV001", "In-place value is defined");
+  RV001("RV001", "In-place value is defined: ");
   private String code;
   private String message;
 
