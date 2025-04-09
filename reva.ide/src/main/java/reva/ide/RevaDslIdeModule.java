@@ -14,6 +14,7 @@ import org.eclipse.xtext.ide.server.codeActions.ICodeActionService2;
 import org.eclipse.xtext.ide.server.codelens.ICodeLensService;
 import org.eclipse.xtext.ide.server.commands.IExecutableCommandService;
 import org.eclipse.xtext.ide.server.contentassist.ContentAssistService;
+import org.eclipse.xtext.ide.server.hover.HoverService;
 import org.eclipse.xtext.service.SingletonBinding;
 import org.eclipse.xtext.xbase.ide.contentassist.XbaseIdeContentProposalProvider;
 import org.eclipse.xtext.xbase.typesystem.internal.IFeatureScopeTracker;
@@ -21,11 +22,12 @@ import reva.formatting2.RevaDslFormatter;
 import reva.ide.codeactions.RevaCodeActionService;
 import reva.ide.codelens.RevaCodeLensService;
 import reva.ide.commands.RevaCommandsService;
+import reva.ide.contentassist.RevaContentProposalProvider;
 import reva.ide.contentassist.RevaCrossrefProposalProvider;
-import reva.ide.contentassist.RevaIdeContentProposalProvider;
 import reva.ide.contentassist.providers.PrintExpressionContentProposalProvider;
 import reva.ide.contentassist.providers.RevaAbstractContentProposalProvider;
 import reva.ide.endpoints.custom.RevaTextDocumentExtension;
+import reva.ide.hover.RevaHoverService;
 import reva.revaDsl.PrintExpression;
 import reva.typesystem.OptimizingFeatureScopeTrackerProvider2;
 
@@ -72,9 +74,13 @@ public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
   public Class<? extends IdeCrossrefProposalProvider> bindIdeCrossrefProposalProvider() {
     return RevaCrossrefProposalProvider.class;
   }
-  
+
   public Class<? extends XbaseIdeContentProposalProvider> bindXbaseIdeContentProposalProvider() {
-    return RevaIdeContentProposalProvider.class;
+    return RevaContentProposalProvider.class;
+  }
+
+  public Class<? extends HoverService> bindHoverService() {
+    return RevaHoverService.class;
   }
 
   private void bindContentAssistProviders(Binder binder) {
