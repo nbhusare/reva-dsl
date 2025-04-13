@@ -95,22 +95,6 @@ public class RevaLanguageServerImpl extends LanguageServerImpl {
     return CompletableFuture.completedFuture(Either.forLeft(Collections.emptyList()));
   }
 
-  @Override
-  protected ServerCapabilities createServerCapabilities(InitializeParams params) {
-    ServerCapabilities serverCapabilities = super.createServerCapabilities(params);
-    CompletionOptions completionProvider = serverCapabilities.getCompletionProvider();
-    List<String> triggerCharacters =
-        Stream.concat(completionProvider.getTriggerCharacters().stream(), Stream.of(" "))
-            .collect(Collectors.toList());
-    completionProvider.setTriggerCharacters(triggerCharacters);
-    completionProvider.setResolveProvider(true);
-
-    serverCapabilities.setCodeActionProvider(getCodeActionOptions());
-    serverCapabilities.setCodeLensProvider(new CodeLensOptions());
-
-    return serverCapabilities;
-  }
-
   public static CodeActionOptions getCodeActionOptions() {
     CodeActionOptions options = new CodeActionOptions();
     options.setResolveProvider(true);
