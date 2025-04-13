@@ -56,10 +56,6 @@ public abstract class RevaAbstractContentProposalProvider extends XbaseIdeConten
     String insertText = snippet.getInsertText();
 
     ContentAssistEntry entry = new ContentAssistEntry();
-    entry.setPrefix(context.getPrefix());
-    entry.setProposal(insertText);
-    entry.setLabel(snippet.getLabel());
-    entry.setKind(ContentAssistEntry.KIND_SNIPPET);
 
     return entry;
   }

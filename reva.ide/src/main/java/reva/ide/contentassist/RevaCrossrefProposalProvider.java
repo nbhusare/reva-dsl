@@ -19,25 +19,7 @@ public class RevaCrossrefProposalProvider extends XbaseIdeCrossrefProposalProvid
   @Override
   protected Iterable<IEObjectDescription> queryScope(
       IScope scope, CrossReference crossReference, ContentAssistContext context) {
-    return Lists.newArrayList(scope.getAllElements()).stream()
-        .filter(
-            ieObjDesc -> {
-              EObject eObjectOrProxy = ieObjDesc.getEObjectOrProxy();
-              if ((eObjectOrProxy instanceof JvmFormalParameter)
-                  || (eObjectOrProxy instanceof JvmGenericType)) {
-                return false;
-              }
-              if (!isJvmOperation(ieObjDesc)) {
-                return true;
-              }
-              JvmOperation jvmOperation = (JvmOperation) eObjectOrProxy;
-              String identifier = jvmOperation.getIdentifier();
-              return !identifier.startsWith("org.eclipse.xtext.xbase.lib.")
-                  && !identifier.contains("java.lang.")
-                  && jvmOperation.getVisibility() == JvmVisibility.PUBLIC
-                  && !(jvmOperation.eContainer() instanceof JvmEnumerationType);
-            })
-        .collect(Collectors.toList());
+    return super.queryScope(scope, crossReference, context);
   }
 
   private static boolean isJvmOperation(IEObjectDescription objectDesc) {

@@ -30,7 +30,7 @@ public class RevaDslValidator extends AbstractRevaDslValidator {
         || super.isValueExpectedRecursive(expr);
   }
 
-  @Check(CheckType.NORMAL)
+  @Check(CheckType.EXPENSIVE)
   public void validateXExpression(XExpression expression) {
     if (expression.eContainer() instanceof PrintExpression
         && (expression instanceof XNumberLiteral || expression instanceof XStringLiteral)) {
@@ -38,6 +38,21 @@ public class RevaDslValidator extends AbstractRevaDslValidator {
           Diagnostic.RV001.getMessage()
               + NodeModelUtils.getTokenText(NodeModelUtils.getNode(expression)),
           Diagnostic.RV001.getCode());
+    }
+  }
+
+  @Check(CheckType.NORMAL)
+  public void validateRepeatExpression(RepeatExpression expression) {
+    XExpression count = expression.getCount();
+
+    if (!(count instanceof XNumberLiteral numberLiteral)) {
+      return;
+    }
+
+    int countValue = Integer.parseInt(numberLiteral.getValue());
+
+    if (countValue == 1) {
+      publishWarning("Count should be greater than 1", "RV001");
     }
   }
 

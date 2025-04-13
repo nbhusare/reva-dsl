@@ -69,11 +69,8 @@ public class RevaDslIdeModule extends AbstractRevaDslIdeModule {
   public Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
     return RevaTextDocumentExtension.class;
   }
-
-  @Override
-  public Class<? extends IdeCrossrefProposalProvider> bindIdeCrossrefProposalProvider() {
-    return RevaCrossrefProposalProvider.class;
-  }
+  
+  // TODO: Bind the cross reference proposal provider
 
   public Class<? extends XbaseIdeContentProposalProvider> bindXbaseIdeContentProposalProvider() {
     return RevaContentProposalProvider.class;
